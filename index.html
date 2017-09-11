@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+ 	<head>
+		<script src="recorder.js"></script>
+		<script src="Fr.voice.js"></script>
+		<script src="jquery.js"></script>
+		<script src="app.js"></script>
+ 	</head>
+	
+	
+ 	<body>
+
+		
+    <div>
+      <a class="button recordButton" id="record">Record</a>
+      <a class="button recordButton" id="recordFor5">Record For 5 Seconds</a>
+      <a class="button disabled one" id="pause">Pause</a>
+      <a class="button disabled one" id="stop">Reset</a>
+	  <a class="button disabled one" id="play">Play</a>
+    </div>
+	
+
+	<audio controls id="audio"></audio>
+	
+	
+	
+		<style>
+		.button{
+			display: inline-block;
+			vertical-align: middle;
+			margin: 0px 5px;
+			padding: 5px 12px;
+			cursor: pointer;
+			outline: none;
+			font-size: 13px;
+			text-decoration: none !important;
+			text-align: center;
+			color:#fff;
+			background-color: #4D90FE;
+			border: 1px solid #4787ED;
+			box-shadow: 0 1px 3px #BFBFBF;
+		}
+		a.button{
+			color: #fff;
+		}
+		.button:hover{
+			box-shadow: inset 0px 1px 1px #8C8C8C;
+		}
+		.button.disabled{
+			box-shadow:none;
+			opacity:0.7;
+		}
+    canvas{
+      display: block;
+    }
+		</style>
+		
+		
+		
+		
+
+
+    <input class="button recordButton" type="submit" value="loadurl" onClick="load_audiosrc();" />
+	<input class="button recordButton" type="submit" value="record to base64" onClick="play_audiosrc();" />
+
+ 
+    <p>File Contents as DataURL:</p>
+    <textarea id="textAreaFileContents" style="width:640;height:240" ></textarea>
+ 
+ 
+ 
+ 
+<script type="text/javascript">
+ 
+ 
+var superBuffer = new Blob(recordedBlobs, {type: 'audio/webm'});
+var reader = new window.FileReader();
+reader.readAsDataURL(superBuffer);
+reader.onloadend = function() 
+	{
+	base64 = reader.result;
+	base64 = base64.split(',')[1];
+	console.log(base64 );
+	}
+	 
+	  
+	  
+	  
+
+function getData(audioFile, callback) 
+
+{
+var reader = new FileReader();
+reader.onload = function(event) {
+var data = event.target.result.split(',')
+, decodedImageData = btoa(data[1]); // the actual conversion of data from binary to base64 format
+callback(decodedImageData);
+};
+reader.readAsDataURL(audioFile);
+}
+
+
+
+
+
+
+
+
+ function load_audiosrc()
+ {
+document.getElementById("textAreaFileContents").value =document.getElementById("audio").src;
+
+ } 
+ 
+ 
+ function play_audiosrc()
+ {
+getData("audio","textAreaFileContents");
+
+ }
+ 
+ 
+
+
+ 
+</script>
+ 
+
+
+ 
+ </body>
+</html>
